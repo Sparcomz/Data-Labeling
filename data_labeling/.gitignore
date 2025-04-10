@@ -1,0 +1,52 @@
+# Byte-compiled and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+
+# Build and distribution directories
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django secrets and settings
+*.sqlite3
+*.log
+*.env
+*.DS_Store
+local_settings.py
+db.sqlite3
+
+# Migrations
+**/migrations/*.pyc
+
+# Static and media files
+staticfiles/
+media/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# AWS
+.elasticbeanstalk/
