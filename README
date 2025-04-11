@@ -1,0 +1,63 @@
+# Data Labeling Project
+
+This is a Django-based web application for managing data annotation workflows. The application supports different user roles, including uploaders, annotators, reviewers, and admins, each with specific functionalities.
+
+## Features
+
+- **User Roles**: Manage different user roles with specific permissions.
+- **Data Management**: Upload and manage data for annotation tasks.
+- **Annotation and Review**: Annotate data and review annotations.
+- **Statistics**: Track statistics for tasks completed, approved, and rejected.
+- **Admin Actions**: Admins can manage users and override reviews.
+
+## Prerequisites
+
+- Python 3.6+
+- Django 3.2+
+- PostgreSQL (or SQLite for development)
+
+## Setup Instructions
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/yourusername/data-labeling.git
+   cd data-labeling
+   ```
+   
+2. **Create a Virtual Environment**
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure the Database**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
