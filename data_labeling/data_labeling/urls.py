@@ -20,6 +20,10 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.login_view, name='login'),
+    path('accounts/login/', views.login_view, name='login'),
+    path('accounts/logout/', views.logout_view, name='logout'),
+    path('register/', views.register_view, name='register'),
     path('', views.home_view, name='home'),
+    path('uploader/', views.home_view, name='uploader_home'),  # Reuse home_view for uploader
+    path('upload/', views.upload_data_view, name='upload_data'),
 ]
