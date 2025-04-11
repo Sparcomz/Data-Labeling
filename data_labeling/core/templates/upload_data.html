@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload New Data</title>
+    {% load static %}
+    <!-- Uncomment the line below to use the CSS file -->
+    <!-- <link rel="stylesheet" href="{% static 'styles.css' %}"> -->
+    <script>
+        function toggleFields() {
+            var dataType = document.getElementById('id_data_type').value;
+            var textField = document.getElementById('id_text_content').parentElement;
+            var imageField = document.getElementById('id_image_content').parentElement;
+
+            if (dataType === 'text') {
+                textField.style.display = 'block';
+                imageField.style.display = 'none';
+            } else if (dataType === 'image') {
+                textField.style.display = 'none';
+                imageField.style.display = 'block';
+            } else {
+                textField.style.display = 'none';
+                imageField.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initially hide both fields
+            document.getElementById('id_text_content').parentElement.style.display = 'none';
+            document.getElementById('id_image_content').parentElement.style.display = 'none';
+
+            // Add event listener to toggle fields on data type change
+            document.getElementById('id_data_type').addEventListener('change', toggleFields);
+        });
+    </script>
+</head>
+<body>
+    <h1>Upload New Data</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    <a href="{% url 'uploader_home' %}">Back to Home</a>
+</body>
+</html>
