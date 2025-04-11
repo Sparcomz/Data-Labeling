@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Annotate Task</title>
+    <title>Review Task</title>
     {% load custom_filters %}
 </head>
 <body>
-    <h1>Annotate Task</h1>
+    <h1>Review Task</h1>
     <p>Task Description: {{ data_task.task_description }}</p>
 
     {% if data_task.data_type == 'text' %}
@@ -16,13 +16,16 @@
         <p>Image Content: <img src="data:image/png;base64,{{ data_task.image_content|b64encode }}" alt="Image"></p>
     {% endif %}
 
+    <h2>Annotation</h2>
+    <p>{{ annotation.annotation }}</p>
+
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <textarea name="feedback" placeholder="Enter feedback here"></textarea>
         <button type="submit" name="approve">Approve</button>
         <button type="submit" name="reject">Reject</button>
     </form>
 
-    <a href="{% url 'annotator_home' %}">Back to Pending Tasks</a>
+    <a href="{% url 'reviewer_home' %}">Back to Review Tasks</a>
 </body>
 </html>

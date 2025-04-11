@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, RegisterForm, DataUploadForm, AnnotationForm
-from .models import Data, Annotation
+from .models import Data, Annotation, Review
 
 def login_view(request):
     if request.method == 'POST':
@@ -51,7 +51,8 @@ def home_view(request):
             pending_tasks = Data.objects.filter(status='pending')
             return render(request, 'annotator_home.html', {'pending_tasks': pending_tasks})
         elif user.role == 'reviewer':
-            return render(request, 'reviewer_home.html')
+            review_tasks = Data.objects.filter(status='review')
+            return render(request, 'reviewer_home.html', {'review_tasks': review_tasks})
         elif user.role == 'admin':
             return render(request, 'admin_home.html')
     return render(request, 'home.html')
@@ -100,3 +101,27 @@ def annotate_task_view(request, task_id):
         form = AnnotationForm()
 
     return render(request, 'annotate_task.html', {'data_task': data_task, 'form': form})
+
+@login_required
+def review_task_view(request, task_id):
+    if request.user.role != 'reviewer':
+        return redirect('home')
+
+    data_task = get_object_or_404(Data, id=task_id)
+    annotation = get_object_or_404(Annotation, data=data_task)
+
+    if request.method == 'POST':
+        decision = 'approved' if 'approve' in request.POST else 'rejected'
+        Review.objects.create(
+            annotation=annotation,
+            reviewer=request.user,
+            feedback=request.POST.get('feedback', ''),
+            decision=decision
+        )
+
+        data_task.status = 'complete'
+        data_task.save()
+
+        return redirect('reviewer_home')
+
+    return render(request, 'review_task.html', {'data_task': data_task, 'annotation': annotation})

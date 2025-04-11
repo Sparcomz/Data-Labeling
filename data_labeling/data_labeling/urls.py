@@ -24,8 +24,10 @@ urlpatterns = [
     path('accounts/logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
     path('', views.home_view, name='home'),
-    path('uploader/', views.home_view, name='uploader_home'),  # Reuse home_view for uploader
+    path('uploader/', views.home_view, name='uploader_home'),
     path('upload/', views.upload_data_view, name='upload_data'),
-    path('annotator/', views.home_view, name='annotator_home'),  # Reuse home_view for annotator
+    path('annotator/', views.home_view, name='annotator_home'),
     path('annotate/<int:task_id>/', views.annotate_task_view, name='annotate_task'),
+    path('reviewer/', views.home_view, name='reviewer_home'),
+    path('review/<int:task_id>/', views.review_task_view, name='review_task'),
 ]
