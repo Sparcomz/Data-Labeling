@@ -11,7 +11,7 @@
         function toggleFields() {
             var dataType = document.getElementById('id_data_type').value;
             var textField = document.getElementById('id_text_content').parentElement;
-            var imageField = document.getElementById('id_image_content').parentElement;
+            var imageField = document.getElementById('id_image_file').parentElement;
 
             if (dataType === 'text') {
                 textField.style.display = 'block';
@@ -26,11 +26,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Initially hide both fields
             document.getElementById('id_text_content').parentElement.style.display = 'none';
-            document.getElementById('id_image_content').parentElement.style.display = 'none';
-
-            // Add event listener to toggle fields on data type change
+            document.getElementById('id_image_file').parentElement.style.display = 'none';
             document.getElementById('id_data_type').addEventListener('change', toggleFields);
         });
     </script>
