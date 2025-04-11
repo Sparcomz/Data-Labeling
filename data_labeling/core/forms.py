@@ -20,9 +20,10 @@ class RegisterForm(forms.ModelForm):
     role = forms.ChoiceField(choices=ROLE_CHOICES)
 
 class DataUploadForm(forms.ModelForm):
+    image_file = forms.FileField(required=False) 
     class Meta:
         model = Data
-        fields = ['data_type', 'task_type', 'task_description', 'text_content', 'image_content']
+        fields = ['data_type', 'task_type', 'task_description', 'text_content']
         widgets = {
             'task_description': forms.Textarea(attrs={'placeholder': 'Enter task description'}),
         }

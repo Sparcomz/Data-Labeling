@@ -30,7 +30,7 @@ class Data(models.Model):
     task_type = models.CharField(max_length=20, choices=TASK_TYPE_CHOICES)
     task_description = models.TextField()
     text_content = models.TextField(blank=True, null=True)  # For text data
-    image_content = models.ImageField(upload_to='images/', blank=True, null=True)  # For image data
+    image_content = models.BinaryField(blank=True, null=True)  # For image data
 
 class Annotation(models.Model):
     STATUS_CHOICES = [

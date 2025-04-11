@@ -61,11 +61,13 @@ def upload_data_view(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = DataUploadForm(request.POST)
+        form = DataUploadForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.save(commit=False)
             data.uploader = request.user
             data.status = 'pending'
+            if 'image_file' in request.FILES:
+                data.image_content = request.FILES['image_file'].read()  # Read file as binary
             data.save()
             return redirect('uploader_home')
     else:
