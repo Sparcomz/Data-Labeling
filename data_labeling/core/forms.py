@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Data
+from .models import User, Data, Annotation
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, required=True)
@@ -26,4 +26,12 @@ class DataUploadForm(forms.ModelForm):
         fields = ['data_type', 'task_type', 'task_description', 'text_content']
         widgets = {
             'task_description': forms.Textarea(attrs={'placeholder': 'Enter task description'}),
+        }
+
+class AnnotationForm(forms.ModelForm):
+    class Meta:
+        model = Annotation
+        fields = ['annotation']
+        widgets = {
+            'annotation': forms.Textarea(attrs={'placeholder': 'Enter your annotation here'}),
         }

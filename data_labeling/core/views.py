@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, RegisterForm, DataUploadForm
-from .models import Data
+from .forms import LoginForm, RegisterForm, DataUploadForm, AnnotationForm
+from .models import Data, Annotation
 
 def login_view(request):
     if request.method == 'POST':
@@ -48,7 +48,8 @@ def home_view(request):
             uploaded_data = Data.objects.filter(uploader=user)
             return render(request, 'uploader_home.html', {'uploaded_data': uploaded_data})
         elif user.role == 'annotator':
-            return render(request, 'annotator_home.html')
+            pending_tasks = Data.objects.filter(status='pending')
+            return render(request, 'annotator_home.html', {'pending_tasks': pending_tasks})
         elif user.role == 'reviewer':
             return render(request, 'reviewer_home.html')
         elif user.role == 'admin':
@@ -74,3 +75,28 @@ def upload_data_view(request):
         form = DataUploadForm()
 
     return render(request, 'upload_data.html', {'form': form})
+
+@login_required
+def annotate_task_view(request, task_id):
+    if request.user.role != 'annotator':
+        return redirect('home')
+
+    data_task = get_object_or_404(Data, id=task_id)
+
+    if request.method == 'POST':
+        form = AnnotationForm(request.POST)
+        if form.is_valid():
+            annotation = form.save(commit=False)
+            annotation.annotator = request.user
+            annotation.data = data_task
+            annotation.status = 'approved' if 'approve' in request.POST else 'rejected'
+            annotation.save()
+
+            data_task.status = 'review'
+            data_task.save()
+
+            return redirect('annotator_home')
+    else:
+        form = AnnotationForm()
+
+    return render(request, 'annotate_task.html', {'data_task': data_task, 'form': form})

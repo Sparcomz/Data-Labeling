@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotate Task</title>
+    {% load custom_filters %}
+</head>
+<body>
+    <h1>Annotate Task</h1>
+    <p>Task Description: {{ data_task.task_description }}</p>
+
+    {% if data_task.data_type == 'text' %}
+        <p>Text Content: {{ data_task.text_content }}</p>
+    {% elif data_task.data_type == 'image' %}
+        <p>Image Content: <img src="data:image/png;base64,{{ data_task.image_content|b64encode }}" alt="Image"></p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="approve">Approve</button>
+        <button type="submit" name="reject">Reject</button>
+    </form>
+
+    <!-- Back Button -->
+    <a href="{% url 'annotator_home' %}">Back to Pending Tasks</a>
+</body>
+</html>

@@ -1,5 +1,15 @@
 <h1>Annotator Home</h1>
-<p>Welcome, Annotator!</p>
+<p>Welcome, {{ user.username }}!</p>
 {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'logout' %}">Logout</a>
 {% endif %}
+<h2>Pending Tasks</h2>
+<ul>
+    {% for task in pending_tasks %}
+        <li>
+            <a href="{% url 'annotate_task' task.id %}">{{ task.task_description }}</a>
+        </li>
+    {% empty %}
+        <li>No pending tasks available.</li>
+    {% endfor %}
+</ul>
