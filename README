@@ -40,24 +40,41 @@ This is a Django-based web application for managing data annotation workflows. T
 
 4. **Configure the Database**
 
-   ```bash
-   pip install -r requirements.txt
+   In the root directory of your project (where manage.py is located), create a file named .env and add the following content, replacing the placeholders with your actual database credentials:
+   ```
+   DB_NAME=your_database_name
+   DB_USER=your_database_user
+   DB_PASSWORD=your_database_password
+   DB_HOST=your_database_host
+   DB_PORT=your_database_port
    ```
 
-3. **Install Dependencies**
+5. **Apply Migrations**
 
    ```bash
-   pip install -r requirements.txt
+   python manage.py makemigrations
+   python manage.py migrate
    ```
 
-3. **Install Dependencies**
+6. **Create a Superuser(Optional)**
 
    ```bash
-   pip install -r requirements.txt
+   python manage.py createsuperuser
    ```
 
-3. **Install Dependencies**
+7. **Run the Development Server**
 
    ```bash
-   pip install -r requirements.txt
+   python manage.py runserver
    ```
+
+8. **Access the Application**
+
+   Open your web browser and go to http://127.0.0.1:8000/.
+
+## Usage
+
+- Login and Register: Use your credentials to log in or create new account.
+- Upload Data: Navigate to the uploader section to upload new data.
+- Annotate and Review: Annotators can annotate data, and reviewers can review annotations.
+- Admin Actions: Admins can manage users and perform administrative actions.
