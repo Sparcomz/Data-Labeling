@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, RegisterForm, DataUploadForm, AnnotationForm
-from .models import Data, Annotation, Review
+from .models import User, Data, Annotation, Review
 
 def login_view(request):
     if request.method == 'POST':
@@ -125,3 +125,37 @@ def review_task_view(request, task_id):
         return redirect('reviewer_home')
 
     return render(request, 'review_task.html', {'data_task': data_task, 'annotation': annotation})
+
+@login_required
+def view_data_list(request):
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    all_data = Data.objects.all()
+    return render(request, 'view_data_list.html', {'all_data': all_data})
+
+@login_required
+def view_data_detail(request, data_id):
+    data = get_object_or_404(Data, id=data_id)
+    return render(request, 'view_data_detail.html', {'data': data})
+
+@login_required
+def view_review_list(request):
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    all_reviews = Review.objects.all()
+    return render(request, 'view_review_list.html', {'all_reviews': all_reviews})
+
+@login_required
+def view_review_detail(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    return render(request, 'view_review_detail.html', {'review': review})
+
+@login_required
+def manage_user_view(request):
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    users = User.objects.all()
+    return render(request, 'manage_user.html', {'users': users})

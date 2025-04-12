@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Detail</title>
+</head>
+<body>
+    <h1>Data Detail</h1>
+    <p><strong>Description:</strong> {{ data.task_description }}</p>
+    <p><strong>Type:</strong> {{ data.data_type }}</p>
+    <p><strong>Status:</strong> {{ data.status }}</p>
+    <p><strong>Task Type:</strong> {{ data.task_type }}</p>
+    {% if data.data_type == 'text' %}
+        <p><strong>Content:</strong> {{ data.text_content }}</p>
+    {% elif data.data_type == 'image' %}
+        <p><strong>Image:</strong> <img src="data:image/png;base64,{{ data.image_content|b64encode }}" alt="Image"></p>
+    {% endif %}
+    <a href="{% url 'view_data_list' %}">Back to Data List</a>
+</body>
+</html>

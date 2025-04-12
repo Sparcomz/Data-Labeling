@@ -30,4 +30,10 @@ urlpatterns = [
     path('annotate/<int:task_id>/', views.annotate_task_view, name='annotate_task'),
     path('reviewer/', views.home_view, name='reviewer_home'),
     path('review/<int:task_id>/', views.review_task_view, name='review_task'),
+    path('admin_home/', views.home_view, name='admin_home'),
+    path('view_data/', views.view_data_list, name='view_data_list'),
+    path('view_data/<int:data_id>/', views.view_data_detail, name='view_data_detail'),
+    path('view_reviews/', views.view_review_list, name='view_review_list'),
+    path('view_review/<int:review_id>/', views.view_review_detail, name='view_review_detail'),
+    path('manage_user/', views.manage_user_view, name='manage_user'),
 ]

@@ -1,5 +1,22 @@
-<h1>Admin Home</h1>
-<p>Welcome, Admin!</p>
-{% if user.is_authenticated %}
-    <a href="{% url 'logout' %}">Logout</a>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+</head>
+<body>
+    <h1>Admin Home</h1>
+    <p>Welcome, {{ user.username }}!</p>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+    {% endif %}
+
+    <h2>Admin Actions</h2>
+    <ul>
+        <li><a href="{% url 'view_data_list' %}">View/Delete Data</a></li>
+        <li><a href="{% url 'view_review_list' %}">Override Review</a></li>
+        <li><a href="{% url 'manage_user' %}">Manage User</a></li>
+    </ul>
+</body>
+</html>
