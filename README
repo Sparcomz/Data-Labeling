@@ -24,7 +24,9 @@ This is a Django-based web application for managing data annotation workflows. T
    git clone https://github.com/yourusername/data-labeling.git
    cd data-labeling
    ```
-   
+
+**Project is in development, make sure to switch to the branch - sprint1 before continuing.**
+
 2. **Create a Virtual Environment**
 
    ```bash
