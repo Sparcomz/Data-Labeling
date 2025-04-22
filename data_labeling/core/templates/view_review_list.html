@@ -9,7 +9,9 @@
     <h1>All Reviews</h1>
     <ul>
         {% for review in all_reviews %}
-            <li><a href="{% url 'view_review_detail' review.id %}">Review for {{ review.annotation.data.task_description }}</a></li>
+            <li>
+                <a href="{% url 'override_review' review.id %}">Review for {{ review.annotation.data.task_description }}</a>
+            </li>
         {% empty %}
             <li>No reviews available.</li>
         {% endfor %}

@@ -9,7 +9,12 @@
     <h1>All Data</h1>
     <ul>
         {% for data in all_data %}
-            <li><a href="{% url 'view_data_detail' data.id %}">{{ data.task_description }}</a></li>
+            <li><a href="{% url 'view_data_detail' data.id %}">{{ data.task_description }}  </a>
+                <form method="post" action="{% url 'delete_data' data.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Delete this data?');">Delete</button>
+                </form>
+            </li>
         {% empty %}
             <li>No data available.</li>
         {% endfor %}

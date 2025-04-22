@@ -37,4 +37,7 @@ urlpatterns = [
     path('view_review/<int:review_id>/', views.view_review_detail, name='view_review_detail'),
     path('manage_user/', views.manage_user_view, name='manage_user'),
     path('view_feedback/<int:annotation_id>/', views.view_feedback_detail, name='view_feedback_detail'),
+    path('admin_change_role/<int:user_id>/', views.change_user_role_view, name='change_user_role'),
+    path('admin_delete_data/<int:data_id>/', views.delete_data_view, name='delete_data'),
+    path('admin_override_review/<int:review_id>/', views.override_review_view, name='override_review')
 ]

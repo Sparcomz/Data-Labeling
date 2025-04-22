@@ -183,3 +183,43 @@ def view_feedback_detail(request, annotation_id):
         'reviews': reviews,
         'data_task': data_task
     })
+
+@login_required
+def change_user_role_view(request, user_id):
+    if request.user.role != 'admin':
+        return redirect('home')
+    user = get_object_or_404(User, id=user_id)
+    
+    if request.method == 'POST':
+        new_role = request.POST.get('role')
+        if new_role in dict(User.ROLE_CHOICES):
+            user.role = new_role
+            user.save()
+    
+    users = User.objects.all()
+    
+    return render(request, 'manage_user.html', {'users': users})
+
+@login_required
+def delete_data_view(request, data_id):
+    if request.user.role != 'admin':
+        return redirect('home')
+    data = get_object_or_404(Data, id=data_id)
+    if request.method == 'POST':
+        data.delete()
+        all_data = Data.objects.all()
+        return render(request, 'view_data_list.html', {'all_data': all_data})
+    
+    return redirect('view_data_list')
+
+@login_required
+def override_review_view(request, review_id):
+    if request.user.role != 'admin':
+        return redirect('home')
+    review = get_object_or_404(Review, id=review_id)
+    if request.method == 'POST':
+        review.feedback = request.POST.get('feedback')
+        review.decision = request.POST.get('decision')
+        review.save()
+        return redirect('view_review_list')
+    return render(request, 'override_review.html', {'review': review})

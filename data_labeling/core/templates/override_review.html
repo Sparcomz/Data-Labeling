@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Override Review</title>
+</head>
+<body>
+    <h1>Override Review</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Feedback:</label><br>
+        <textarea name="feedback" rows="4" cols="50">{{ review.feedback }}</textarea><br><br>
+        <label>Decision:</label>
+        <select name="decision">
+            <option value="approved" {% if review.decision == 'approved' %}selected{% endif %}>Approved</option>
+            <option value="rejected" {% if review.decision == 'rejected' %}selected{% endif %}>Rejected</option>
+        </select><br><br>
+        <button type="submit">Update Review</button>
+    </form>
+    <a href="{% url 'view_review_list' %}">Back</a>
+</body>
+</html>
