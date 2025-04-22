@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+    {% load custom_filters %}
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .task-details {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .annotation-details {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border-radius: 5px;
+        }
+        .feedback-details {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            border-left: 4px solid #4a90e2;
+        }
+        .approved {
+            border-left-color: green;
+        }
+        .rejected {
+            border-left-color: red;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Feedback Details</h1>
+        <a href="{% url 'annotator_home' %}">Back to Annotator Home</a>
+        
+        <div class="task-details">
+            <h2>Task Details</h2>
+            <p><strong>Description:</strong> {{ data_task.task_description }}</p>
+            <p><strong>Task Type:</strong> {{ data_task.task_type }}</p>
+            <p><strong>Status:</strong> {{ data_task.status|title }}</p>
+            
+            {% if data_task.data_type == 'text' %}
+                <div>
+                    <strong>Content:</strong>
+                    <p>{{ data_task.text_content }}</p>
+                </div>
+            {% elif data_task.data_type == 'image' %}
+                <div>
+                    <strong>Image:</strong><br>
+                    <img src="data:image/png;base64,{{ data_task.image_content|b64encode }}" alt="Task Image" style="max-width: 100%;">
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="annotation-details">
+            <h2>Your Annotation</h2>
+            <p>{{ annotation.annotation }}</p>
+            <p>
+                <strong>Status:</strong> 
+                <span class="status-badge status-{{ annotation.status }}">{{ annotation.status|title }}</span>
+            </p>
+        </div>
+        
+        <h2>Reviewer Feedback</h2>
+        {% for review in reviews %}
+            <div class="feedback-details {% if review.decision == 'approved' %}approved{% else %}rejected{% endif %}">
+                <p><strong>Decision:</strong> {{ review.decision|title }}</p>
+                <p><strong>Feedback:</strong> {{ review.feedback }}</p>
+                <p><strong>Reviewed by:</strong> {{ review.reviewer.username }}</p>
+            </div>
+        {% empty %}
+            <p>No feedback available for this annotation.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

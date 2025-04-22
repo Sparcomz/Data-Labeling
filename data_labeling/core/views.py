@@ -49,7 +49,14 @@ def home_view(request):
             return render(request, 'uploader_home.html', {'uploaded_data': uploaded_data})
         elif user.role == 'annotator':
             pending_tasks = Data.objects.filter(status='pending')
-            return render(request, 'annotator_home.html', {'pending_tasks': pending_tasks})
+            # Get all annotations by this annotator that have reviews
+            completed_annotations = Annotation.objects.filter(
+                annotator=user
+            ).prefetch_related('review_set')
+            return render(request, 'annotator_home.html', {
+                'pending_tasks': pending_tasks,
+                'completed_annotations': completed_annotations
+            })
         elif user.role == 'reviewer':
             review_tasks = Data.objects.filter(status='review')
             return render(request, 'reviewer_home.html', {'review_tasks': review_tasks})
@@ -159,3 +166,20 @@ def manage_user_view(request):
 
     users = User.objects.all()
     return render(request, 'manage_user.html', {'users': users})
+
+@login_required
+def view_feedback_detail(request, annotation_id):
+    if request.user.role != 'annotator':
+        return redirect('home')
+    
+    annotation = get_object_or_404(Annotation, id=annotation_id, annotator=request.user)
+    reviews = Review.objects.filter(annotation=annotation)
+    
+    # Get the task details
+    data_task = annotation.data
+    
+    return render(request, 'view_feedback.html', {
+        'annotation': annotation,
+        'reviews': reviews,
+        'data_task': data_task
+    })

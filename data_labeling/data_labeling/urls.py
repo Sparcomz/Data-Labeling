@@ -36,4 +36,5 @@ urlpatterns = [
     path('view_reviews/', views.view_review_list, name='view_review_list'),
     path('view_review/<int:review_id>/', views.view_review_detail, name='view_review_detail'),
     path('manage_user/', views.manage_user_view, name='manage_user'),
+    path('view_feedback/<int:annotation_id>/', views.view_feedback_detail, name='view_feedback_detail'),
 ]
