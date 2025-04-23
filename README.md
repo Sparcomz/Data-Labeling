@@ -20,6 +20,8 @@ This is a Django-based web application for managing data annotation workflows. T
 
 1. **Clone the Repository**
 
+(please note to update `yourusername` in the url below)
+
    ```bash
    git clone https://github.com/yourusername/data-labeling.git
    cd data-labeling
